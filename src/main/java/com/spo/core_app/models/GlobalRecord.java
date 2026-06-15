@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "global_records")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class GlobalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
