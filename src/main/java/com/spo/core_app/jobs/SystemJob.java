@@ -1,6 +1,8 @@
 package com.spo.core_app.jobs;
 
+import com.spo.core_app.constants.SystemConstants;
 import com.spo.core_app.models.Operation;
+import com.spo.core_app.utilities.SystemUtility;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +13,7 @@ import java.util.List;
 public class SystemJob {
 
     public List<Operation> getAllSystemOperations() {
-        List<Operation> operations = List.of(
+         return List.of(
                 Operation.builder().id("101").operationName("Source_Strategy_Definition").operationCategory("Sourcing").build(),
                 Operation.builder().id("102").operationName("Category_Management").operationCategory("Sourcing").build(),
                 Operation.builder().id("103").operationName("Market_Intelligence").operationCategory("Sourcing").build(),
@@ -23,11 +25,19 @@ public class SystemJob {
                 Operation.builder().id("109").operationName("Request_For_Quotation_RFQ").operationCategory("Sourcing").build(),
                 Operation.builder().id("110").operationName("Bid_Management_And_Evaluation").operationCategory("Sourcing").build()
         );
-        return operations;
     }
 
     @Scheduled(fixedDelay = 3000, initialDelay = 1000)
     public void loadAllOperations(){
         List<Operation> operations = this.getAllSystemOperations();
+        // In this global record fields are not set
+        for(Operation operation : operations){
+            SystemUtility.setGlobalRecordProperties(operation,
+                    SystemConstants.APPLICATION_USER_NAME,
+                    SystemConstants.APPLICATION_USER_NAME,
+                    LocalDateTime.now(),
+                    LocalDateTime.now());
+            //Now we need to save this object in Operation table
+        }
     }
 }

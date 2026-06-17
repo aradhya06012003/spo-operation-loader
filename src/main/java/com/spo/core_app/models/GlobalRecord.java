@@ -1,10 +1,16 @@
 package com.spo.core_app.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = "global_records")
 @Inheritance(strategy = InheritanceType.JOINED)
