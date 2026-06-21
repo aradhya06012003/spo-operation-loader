@@ -2,15 +2,28 @@ package com.spo.core_app.jobs;
 
 import com.spo.core_app.constants.SystemConstants;
 import com.spo.core_app.models.Operation;
+import com.spo.core_app.repositories.OperationRepository;
 import com.spo.core_app.utilities.SystemUtility;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Component //Springboot will create a object of this class and it will store it in a IOC container
 public class SystemJob {
+
+    private OperationRepository operationRepository;
+
+    @Autowired
+    public SystemJob(OperationRepository operationRepository){
+        this.operationRepository = operationRepository;
+    }
 
     public List<Operation> getAllSystemOperations() {
          return List.of(
@@ -38,6 +51,14 @@ public class SystemJob {
                     LocalDateTime.now(),
                     LocalDateTime.now());
             //Now we need to save this object in Operation table
+            Optional<Operation> opr = operationRepository.findByOperationName(operation.getOperationName());
+            if(opr.isEmpty())
+            {
+                operationRepository.save(operation);
+                log.info(String.format("Operation with name %s saved in operations table", operation.getOperationName()));
+            }else{
+                log.info(String.format("Operation with name%s already exists", operation.getOperationName()));
+            }
         }
     }
 }
