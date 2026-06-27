@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User extends GlobalRecord{
 
+    private String userId;
+
     @Column(nullable = false)
     private String firstName;
 
@@ -23,10 +25,12 @@ public class User extends GlobalRecord{
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Enumerator(EnumType.STRING)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @Enumerator(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     @ManyToOne

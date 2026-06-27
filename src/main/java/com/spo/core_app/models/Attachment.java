@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "attachment")
 public class Attachment extends GlobalRecord{
+    private String attachmentId;
     private String attachmentUrl;
     @Enumerated
     private AttachmentType attachmentType;

@@ -3,8 +3,12 @@ package com.spo.core_app.models;
 import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 public class ProcurementCompany extends Company{
+
+    private String procurementCompanyId;
 
     //Procurement Organization Details
     private String procurementHead;
@@ -41,4 +45,12 @@ public class ProcurementCompany extends Company{
     private Integer activeContracts;
     private Integer activePurchaseOrders;
     private Integer activePurchaseRequests;
+
+    //Compliance
+    private Boolean complianceReviewRequired;
+    private Boolean legalReviewRequired;
+
+    //Dates
+    private LocalDate goLiveDate;
+    private LocalDate lastAuditDate;
 }
